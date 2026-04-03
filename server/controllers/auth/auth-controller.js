@@ -240,14 +240,29 @@ const loginUser = async (req, res) => {
 
 //logout
 const logoutUser = (req, res) => {
-  res.clearCookie("token", {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
-  }).json({
-    success: true,
-    message: "Logged out successfully!",
-  });
+  // res.clearCookie("token", {
+  //   httpOnly: true,
+  //   secure: process.env.NODE_ENV === "production",
+  //   sameSite: "strict",
+  // }).json({
+  //   success: true,
+  //   message: "Logged out successfully!",
+  // });
+  res.cookie("token", token, {
+  httpOnly: true,
+  secure: true,
+  sameSite: "none",
+  maxAge: 60 * 60 * 1000,
+}).json({
+  success: true,
+  message: "Logged in successfully",
+  user: {
+    email: checkUser.email,
+    role: checkUser.role,
+    id: checkUser._id,
+    userName: checkUser.userName,
+  },
+});
 };
 
 //auth middleware
