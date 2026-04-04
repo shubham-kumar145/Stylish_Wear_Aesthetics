@@ -28,7 +28,7 @@ mongoose
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-
+console.log("connected" , process.env.CLIENT_URL)
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
