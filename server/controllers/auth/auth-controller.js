@@ -212,43 +212,22 @@ const loginUser = async (req, res) => {
       { expiresIn: "60m" }
     );
 
+    // res.cookie("token", token, {
+    //   httpOnly: true,
+    //   secure: process.env.NODE_ENV === "production",
+    //   sameSite: "strict",
+    //   maxAge: 60 * 60 * 1000,
+    // }).json({
+    //   success: true,
+    //   message: "Logged in successfully",
+    //   user: {
+    //     email: checkUser.email,
+    //     role: checkUser.role,
+    //     id: checkUser._id,
+    //     userName: checkUser.userName,
+    //   },
+    // });
     res.cookie("token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 60 * 60 * 1000,
-    }).json({
-      success: true,
-      message: "Logged in successfully",
-      user: {
-        email: checkUser.email,
-        role: checkUser.role,
-        id: checkUser._id,
-        userName: checkUser.userName,
-      },
-    });
-
-  } catch (e) {
-    console.log(e);
-
-    res.status(500).json({
-      success: false,
-      message: "Some error occured",
-    });
-  }
-};
-
-//logout
-const logoutUser = (req, res) => {
-  // res.clearCookie("token", {
-  //   httpOnly: true,
-  //   secure: process.env.NODE_ENV === "production",
-  //   sameSite: "strict",
-  // }).json({
-  //   success: true,
-  //   message: "Logged out successfully!",
-  // });
-  res.cookie("token", token, {
   httpOnly: true,
   secure: true,
   sameSite: "none",
@@ -263,6 +242,36 @@ const logoutUser = (req, res) => {
     userName: checkUser.userName,
   },
 });
+
+  } catch (e) {
+    console.log(e);
+
+    res.status(500).json({
+      success: false,
+      message: "Some error occured",
+    });
+  }
+};
+
+//logout
+// const logoutUser = (req, res) => {
+  // res.clearCookie("token", {
+  //   httpOnly: true,
+  //   secure: process.env.NODE_ENV === "production",
+  //   sameSite: "strict",
+  // }).json({
+  //   success: true,
+  //   message: "Logged out successfully!",
+  // });
+ const logoutUser = (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+  }).json({
+    success: true,
+    message: "Logged out successfully!",
+  });
 };
 
 //auth middleware
